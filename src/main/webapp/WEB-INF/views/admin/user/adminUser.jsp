@@ -1,0 +1,591 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+//페이지 로드 시 adminUserInfo 함수를 실행하여 초기 데이터를 가져옵니다.
+$(document).ready(function() {
+	const urlParams = new URLSearchParams(window.location.search);
+	console.log("urlParams : " + urlParams);
+  const currentPage = urlParams.get('curPage'); // URL에서 curPage 파라미터 값을 얻어옴
+  console.log("currentPage : " + currentPage);
+  adminUserInfo(currentPage);
+});
+
+function adminUserInfo(currentPage) {
+	//님이 여기다가 매개변수로 currentPage를 받고있짢아요
+	//1, 2, 3, 4, 5 번호를 누를때마다 currentPage를 받아와서 리스트 조회해서 뿌려주는 식으로 해야합니다 동적태그로 만들어서 append시키는거
+	// 아..
+	//너는 밑에 코드보면 href를 이용한거고 adminUserInfo이걸 이용안한거임. href를 이용했다는건 이해했는데
+	// onclick으로도 adminUserInfo함수를 호출했는데 이 부분만 볼 땐, adminUserInfo함수 이용 안한거임??
+	//a 태그 href 주면 그거 누르면 href를 타버리잖아 아 무시되는구나 onclick이?> ㅇㅇ 너는 ajax를 안태운거임 그냥 ㅇㅎ
+			//딱 최초 화면 실행할때만 ajax 탄거고 다른 번호 누를때부터는 그냥 ajax말고 화면 이동으로 된거임 아하 이해했습니당
+			//거기부분 수정하시면 됩니다. 무조건 누를떄마다 이 함수를 탈 수 있게 넵넵 ㄳㄳ 옙
+	console.log("currentPage : " + currentPage);
+	
+	$.ajax({
+		type : 'GET',
+		url : '/adminUserInfo',
+		dataType : 'json',
+		data : {
+			currentPage : currentPage
+		},
+		success: function(data) {
+			console.log("------ data : " + data);
+			console.log("data: " + JSON.stringify(data));
+			
+		  // 페이징 처리를 위한 변수
+			let pagePrevious = '';
+			let pageNumber = '';
+			let pageNext = '';
+			let userInfo = '';
+			// 서버에서 넘어온 페이징 처리 변수
+			let userCount = data[0][0].userCount;
+			let userSize = data[0][0].userSize;
+			let userRow = data[0][0].userRow;
+			let pageSize = data[0][0].pageSize;
+			let pageCount = data[0][0].pageCount;
+			let curPageStr = data[0][0].curPageStr;
+			let curPage = data[0][0].curPage;
+			let startPage = data[0][0].startPage;
+			let endPage = data[0][0].endPage;
+			let startIndex = data[0][0].startIndex;
+			let endIndex = data[0][0].endIndex;
+			// DB에서 넘어온 유저 데이터 변수
+			let selBox = '<input id="userCheck" type="checkbox">';
+			let userId = '';
+			let userPw = '';
+			let userName = '';
+			let userAddrPostal = '';
+			let userAddr = '';
+			let userAddrDetail = '';
+			let userGender = '';
+			let userBirth = '';
+			let useYN = '';
+			let adminYN = '';
+			let rnum = '';
+			let btnPList = '<button id="userPList" class="btn btn-secondary" onclick="userPList()" style="cursor: pointer;">내역조회</button>';
+			let btnUserDelete = '<button id="userDelete" class="btn btn-secondary" onclick="userDelete()" style="cursor: pointer;">회원삭제</button>';
+			let tr = '<tr>';
+			let tr_ = '</tr>';
+			let td = '<td>';
+			let td_ = '</td>';
+			console.log("userCount : " + userCount);
+			console.log("userSize : " + userSize);
+			console.log("userRow : " + userRow);
+			console.log("pageSize : " + pageSize);
+			console.log("pageCount : " + pageCount);
+			console.log("curPageStr : " + curPageStr);
+			console.log("curPage : " + curPage);
+			console.log("startPage : " + startPage);
+			console.log("endPage : " + endPage);
+			console.log("startIndex : " + startIndex);
+			console.log("endIndex : " + endIndex);
+			
+			$("#userTable").empty();
+			for(let i = 0; i < userRow; i++) {
+				// DB에서 넘어온 유저 데이터
+				userId = data[1][i].userId;
+				userPw = data[1][i].userPw;
+				userName = data[1][i].userName;
+				userAddrPostal = data[1][i].userAddrPostal;
+				userAddr = data[1][i].userAddr;
+				userAddrDetail = data[1][i].userAddrDetail;
+				userGender = data[1][i].userGender;
+				userBirth = data[1][i].userBirth;
+				useYN = data[1][i].useYN;
+				adminYN = data[1][i].adminYN;
+				rnum = data[1][i].rnum;
+				
+				
+				console.log("userId : " + userId);
+				console.log("userPw : " + userPw);
+				console.log("userName : " + userName);
+				console.log("userAddrPostal : " + userAddrPostal);
+				console.log("userAddr : " + userAddr);
+				console.log("userAddrDetail : " + userAddrDetail);
+				console.log("userGender : " + userGender);
+				console.log("userBirth : " + userBirth);
+				console.log("useYN : " + useYN);
+				console.log("adminYN : " + adminYN);
+				console.log("rnum : " + rnum);
+				
+				// userInfo 변수에 데이터 담기
+				userInfo = tr +
+										td + selBox + td_ +
+										td + rnum + td_ +
+										'<td id="selUserId">' + userId + '</td>' +
+										td + userPw + td_ +
+										td + userName + td_ +										
+										td + userAddrPostal + td_ +
+										td + userAddr + td_ +
+										td + userAddrDetail + td_ +
+										td + userGender + td_ +
+										td + userBirth + td_ +
+										td + useYN + td_ +
+										td + adminYN + td_ +
+										td + btnPList + td_ +
+										td + btnUserDelete + td_ +
+										tr_;
+				console.log( i + " 번째 입니다.");
+
+				// html 코드 초기화 후 hide으로 불필요한 bootstrap 숨기기
+				$("#dataTable_length").empty();
+				$(".dataTables_empty").empty();
+        $("#dataTable_filter").empty();
+        $("#dataTable_info").empty();
+        $("#dataTable_previous").empty();
+        $("#dataTable_next").empty();
+        $('#dataTable_length').hide();
+        $(".dataTables_empty").hide();
+        $('#dataTable_filter').hide();
+        $("#dataTable_info").hide();
+        $('#dataTable_previous').hide();
+        $('#dataTable_next').hide();
+        $('#userTable').append(userInfo);
+			}
+			$("#pagePrevious").empty();
+			$("#pageNext").empty();
+			$("#pageNumber").empty();
+			// 페이징 처리 <
+			if(startPage > pageSize) {
+				console.log("페이징처리 <");
+				pagePrevious = '<a onclick="adminUserInfo(' + (startPage - 1) + ')"><</a>';
+				console.log("pagePrevious : " + pagePrevious);
+				$('#pagePrevious').append(pagePrevious);
+			}
+			
+			// 페이징 처리 숫자 
+			for(let i = startPage; i <= endPage; i++) {
+				console.log("페이징처리 number");
+				if(i == curPage) {
+					pageNumber = '<a onclick="adminUserInfo(' + i + ')" style="border: 1px solid #ccc; color: red; font-weight: bold;">' + i + '</a>';
+					console.log("pageNumber : " + pageNumber);
+					$('#pageNumber').append(pageNumber);
+				} else {
+					pageNumber = '<a onclick="adminUserInfo(' + i + ')" style="border: 1px solid #ccc;">' + i + '</a>';
+					console.log("pageNumber : " + pageNumber);
+					$('#pageNumber').append(pageNumber);
+				}
+			}
+			// 페이징 처리 >
+			if(pageCount > endPage) {
+				console.log("페이징처리 >");
+				pageNext = '<a onclick="adminUserInfo(' + (endPage + 1) + ')">></a>';
+				$('#pageNext').append(pageNext);
+			}
+		},
+ 	 	error : function(request,status,error) {
+	 	 	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	 	 	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	});
+}
+
+function userPList() {
+	alert("내역조회 버튼누름");
+	
+}
+
+function userDelete() {
+  let selUserId = [];
+  $('input[id="userCheck"]:checked').each(function() {
+  	selUserId.push($(this).closest('tr').find('#selUserId').text());
+    console.log("selUserId : " + selUserId);
+  });
+  console.log("222selUserId22 : " + selUserId);
+  
+	if(selUserId != '') {
+		if(confirm("선택한 회원을 정말 삭제하시겠습니까?")) {
+	    let selUserIdsStr = selUserId.join(',');
+	    $.ajax({
+	    	type : 'GET',
+	  		url : '/userDelete',
+	      data: { 
+	      	selUserId: selUserIdsStr
+	      },
+	      success: function(data) {
+	        console.log("data : " + data);
+	        alert("회원이 삭제되었습니다");
+	        location.reload();
+	      },
+	      error : function(request,status,error) {
+	  	 	 	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  	 	 	console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  		}
+	    });
+	  } else {
+	  	alert("취소되었습니다.");
+	  	location.reload();
+	  }
+	} else {
+		alert("삭제하실 회원을 선택해주세요.");
+		return false;
+	}
+  
+
+}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Custom fonts for this template -->
+    <link href="resources/bootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="resources/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminMain">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">sikppang2<br>관리자 페이지</div>
+            </a><br>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+                회원관리
+            </div>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="adminUser">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>회원관리</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                상품관리
+            </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link" href="adminProduct">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>상품관리</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading 
+            <div class="sidebar-heading">
+                게시판관리
+            </div>
+
+            Nav Item - Tables
+            <li class="nav-item active">
+                <a class="nav-link" href="adminBoard">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>게시판관리</span></a>
+            </li>
+						
+            Divider
+            <hr class="sidebar-divider d-none d-md-block">
+-->
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">
+                                    Alerts Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-primary">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 12, 2019</div>
+                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-success">
+                                            <i class="fas fa-donate text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 7, 2019</div>
+                                        $290.29 has been deposited into your account!
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="mr-3">
+                                        <div class="icon-circle bg-warning">
+                                            <i class="fas fa-exclamation-triangle text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="small text-gray-500">December 2, 2019</div>
+                                        Spending Alert: We've noticed unusually high spending for your account.
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                            </div>
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="messagesDropdown">
+                                <h6 class="dropdown-header">
+                                    Message Center
+                                </h6>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div class="font-weight-bold">
+                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
+                                            problem I've been having.</div>
+                                        <div class="small text-gray-500">Emily Fowler Â· 58m</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
+                                            alt="...">
+                                        <div class="status-indicator"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">I have the photos that you ordered last month, how
+                                            would you like them sent to you?</div>
+                                        <div class="small text-gray-500">Jae Chun Â· 1d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
+                                            alt="...">
+                                        <div class="status-indicator bg-warning"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                            the progress so far, keep up the good work!</div>
+                                        <div class="small text-gray-500">Morgan Alvarez Â· 2d</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
+                                            alt="...">
+                                        <div class="status-indicator bg-success"></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
+                                            told me that people say this to all dogs, even if they aren't good...</div>
+                                        <div class="small text-gray-500">Chicken the Dog Â· 2w</div>
+                                    </div>
+                                </a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                            </div>
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span>
+                                <img class="img-profile rounded-circle"
+                                    src="/resources/img/admin.png">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">회원관리</h1>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">회원정보 조회</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                        		<th>선택</th>
+                                            <th>순서</th>
+                                            <th>아이디</th>
+                                            <th>비밀번호</th>
+                                            <th>이름</th>
+                                            <th>우편번호</th>
+                                            <th>주소</th>
+                                            <th>상세주소</th>
+                                            <th>성별</th>
+                                            <th>생년월일</th>
+                                            <th>회원탈퇴여부</th>
+                                            <th>관리자계정</th>
+                                            <th>구매내역</th>
+                                            <th>회원삭제</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="userTable">
+                                    	
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="page" style="display: flex; justify-content: center; cursor: pointer;">
+	                            <a id="pagePrevious" style="font-size: 12px; text-align: center; margin-left: 5px;"></a>
+	                            <a id="pageNumber" style="font-size: 12px; text-align: center; margin-left: 5px;"></a>
+	                            <a id="pageNext"style="font-size: 12px; text-align: center; margin-left: 5px;"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- End of Footer -->
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">정말로 로그아웃 하시겠습니까?</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+                    <a class="btn btn-primary" href="adminLogin">로그아웃</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="resources/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="resources/bootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="resources/bootstrap/js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="resources/bootstrap/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="resources/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="resources/bootstrap/js/demo/datatables-demo.js"></script>
+
+</body>
+
+</html>

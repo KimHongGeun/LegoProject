@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- join -->
+		<typeAlias type="com.lego.project.user.join.vo.UserMemberVo" alias="userMemberVo" />
+			<!-- login -->	
+		<typeAlias type="com.lego.project.user.login.vo.UserLoginVo" alias="userLoginVo" />		
+	<!-- findId -->	
+		<typeAlias type="com.lego.project.user.login.vo.UserLoginVo" alias="userFindIdVo" />
+	<!-- findPw -->
+		<typeAlias type="com.lego.project.user.login.vo.UserLoginVo" alias="userFindPwVo" />
+	<!-- myPage -->
+		<typeAlias type="com.lego.project.user.myPage.vo.UserUpdateVo" alias="userUpdateVo" />
+	<!-- withdrawal -->
+		<typeAlias type="com.lego.project.user.myPage.vo.UserWithdrawalVo" alias="userWithdrawalVo" />
+	<!-- adminLogin -->
+		<typeAlias type="com.lego.project.user.admin.adminLogin.vo.AdminLoginVo" alias="adminLoginVo" />
+	<!-- adminUser -->
+		<typeAlias type="com.lego.project.user.admin.adminUser.vo.AdminUserVo" alias="adminUserVo" />
+	<!-- adminPage -->
+		<typeAlias type="com.lego.project.user.admin.adminUser.vo.AdminPageVo" alias="adminPageVo" />
+	<!-- adminProduct -->
+		<typeAlias type="com.lego.project.user.admin.adminProduct.vo.AdminProductVo" alias="adminProductVo" />
+	<!-- adminFile -->
+		<typeAlias type="com.lego.project.user.admin.adminProduct.vo.AdminFileVo" alias="adminFileVo" />
+	<!-- userProduct --> 
+	<typeAlias type="com.lego.project.user.prooduct.vo.UserProductVo" alias="userProductVo" />
+	</typeAliases>
+</configuration>
