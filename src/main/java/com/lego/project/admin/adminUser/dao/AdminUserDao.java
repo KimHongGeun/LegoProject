@@ -24,7 +24,7 @@ public class AdminUserDao {
 	// 회원 전체 수 조회
 	public int adminUserCount() {
 		System.out.println("회원 전체 수 조회 : ");
-		return sql.selectOne("adminLgoinDao.adminUserCount");
+		return sql.selectOne("AdminLoginDao.adminUserCount");
 	}
 	// 회원 정보 조회 
 	public List<AdminUserVo> adminUserInfo(AdminUserVo adminUserVo, AdminPageVo adminPageVo){

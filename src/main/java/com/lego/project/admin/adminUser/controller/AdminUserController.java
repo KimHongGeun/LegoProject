@@ -36,7 +36,7 @@ public class AdminUserController {
 		System.out.println("회원관리 페이지 들어옴");
 		String userId = (String)session.getAttribute("userId");
 		
-		if(userId != null && userId.equals("admin")) {
+		if(userId != null && userId.equals("manager")) {
 			return "admin/user/adminUser";
 		}else {
 			System.out.println("로그인 후 이용이 가능합니다.");
@@ -51,7 +51,7 @@ public class AdminUserController {
 			HttpSession session,
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPage){
 		String userId = (String) session.getAttribute("userId");
-		if (userId != null && userId.equals("admin")) {
+		if (userId != null && userId.equals("manager")) {
 			//회원 총 인원
 			int userCount = adminUserService.adminUserCount();
 			System.out.println("------------ userCount : " + userCount);
@@ -144,7 +144,7 @@ public class AdminUserController {
 		System.out.println("회원삭제 들어옴");
 		String userId = (String) session.getAttribute("userId");
 
-		if (userId != null && userId.equals("admin")) {
+		if (userId != null && userId.equals("manager")) {
 			System.out.println("selUserId : " + selUserId);
 			List<String> selUserIds = Arrays.asList(selUserId.split(","));
 			System.out.println("--selUserIds : " + selUserIds);

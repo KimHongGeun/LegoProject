@@ -17,7 +17,7 @@ function validation() {
 		let userId = $('#userId').val();
 		let userPw = $('#userPw').val();
 		let userName = $('#userName').val();
-		let useYN = $('#useYN').val();
+		let userCheck = $('#userCheck').val();
 		const userPwTxt = document.querySelector(".userPw span");
 		const userNameTxt = document.querySelector(".userName span");
 
@@ -43,7 +43,7 @@ function validation() {
 					userId: userId,
 	        userPw: userPw,
 	        userName: userName,
-	        useYN: useYN,
+	        userCheck: userCheck,
 	      };
 			
 	    	$.ajax({
@@ -100,7 +100,7 @@ function validation() {
 						<input id="userName" name="userName" type="text">
 					</td>
 				</tr><br>
-				<input type="hidden" id="useYN" name="useYN" value="N"/>
+				<input type="hidden" id="userCheck" name="userCheck" value="N"/>
 			</table>
 		</div>
 		<button type="button" id="request" class="form-group" onclick="validation()">탈퇴하기</button>

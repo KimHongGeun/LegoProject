@@ -14,7 +14,7 @@ $(document).keypress(function(e) {
 function validation() {
 	let userId = $('#inputEmail').val();
 	let userPw = $('#inputPassword').val();
-	let adminYN = $('#adminYN').val();
+	let managerCheck = $('#managerCheck').val();
 	
 	if(userId == '') {
 		alert('아이디를 입력하세요.');
@@ -34,7 +34,7 @@ function validation() {
 		let params = {
         userId: userId,
         userPw: userPw,
-        adminYN: adminYN,
+        managerCheck: managerCheck,
       };
 		
     	$.ajax({
@@ -81,7 +81,7 @@ function validation() {
                         <div class="row justify-content-center">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">sikppang2 관리자 로그인</h3></div>
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">LEGO 관리자 로그인</h3></div>
                                     <div class="card-body">
                                         <form>
                                             <div class="form-floating mb-3">
@@ -121,7 +121,7 @@ function validation() {
                 </footer>
             </div>
         </div>
-        <input type="hidden" id="adminYN" name="adminYN" value="Y"/>
+        <input type="hidden" id="managerCheck" name="managerCheck" value="Y"/>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="resources/bootstrap/js/scripts.js"></script>
     </body>

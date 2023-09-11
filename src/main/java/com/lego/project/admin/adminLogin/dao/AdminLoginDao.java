@@ -22,6 +22,6 @@ public class AdminLoginDao {
 	// 회원가입 정보전달
 	public AdminLoginVo loginInfo(AdminLoginVo adminLoginVo) {
 		System.out.println("로그인 dao의 UserLoginVo = "+ adminLoginVo);
-		return sql.selectOne("AminLoginDao.adminLogin",adminLoginVo);
+		return sql.selectOne("AdminLoginDao.adminLogin", adminLoginVo);
 	}
 }

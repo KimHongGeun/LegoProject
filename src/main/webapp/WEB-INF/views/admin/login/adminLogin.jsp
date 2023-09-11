@@ -14,7 +14,7 @@ $(document).keypress(function(e) {
 function validation() {
 	let userId = $('#userId').val();
 	let userPw = $('#userPw').val();
-	let adminYN = $('#adminYN').val();
+	let managerCheck = $('#managerCheck').val();
 	
 	if(userId == '') {
 		alert('아이디를 입력하세요.');
@@ -34,7 +34,7 @@ function validation() {
 		let params = {
         userId: userId,
         userPw: userPw,
-        adminYN: adminYN,
+        managerCheck: managerCheck,
       };
 		
     	$.ajax({
@@ -98,7 +98,7 @@ function validation() {
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome LEGO!</h1>
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
@@ -125,7 +125,7 @@ function validation() {
             </div>
         </div>
     </div>
-    <input type="hidden" id="adminYN" name="adminYN" value="Y"/>
+    <input type="hidden" id="managerCheck" name="managerCheck" value="Y"/>
 
     <!-- Bootstrap core JavaScript-->
     <script src="resources/bootstrap/vendor/jquery/jquery.min.js"></script>

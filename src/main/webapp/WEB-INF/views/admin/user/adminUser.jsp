@@ -61,8 +61,8 @@ function adminUserInfo(currentPage) {
 			let userAddrDetail = '';
 			let userGender = '';
 			let userBirth = '';
-			let useYN = '';
-			let adminYN = '';
+			let userCheck = '';
+			let managerCheck = '';
 			let rnum = '';
 			let btnPList = '<button id="userPList" class="btn btn-secondary" onclick="userPList()" style="cursor: pointer;">내역조회</button>';
 			let btnUserDelete = '<button id="userDelete" class="btn btn-secondary" onclick="userDelete()" style="cursor: pointer;">회원삭제</button>';
@@ -93,8 +93,8 @@ function adminUserInfo(currentPage) {
 				userAddrDetail = data[1][i].userAddrDetail;
 				userGender = data[1][i].userGender;
 				userBirth = data[1][i].userBirth;
-				useYN = data[1][i].useYN;
-				adminYN = data[1][i].adminYN;
+				userCheck = data[1][i].userCheck;
+				managerCheck = data[1][i].managerCheck;
 				rnum = data[1][i].rnum;
 				
 				
@@ -106,8 +106,8 @@ function adminUserInfo(currentPage) {
 				console.log("userAddrDetail : " + userAddrDetail);
 				console.log("userGender : " + userGender);
 				console.log("userBirth : " + userBirth);
-				console.log("useYN : " + useYN);
-				console.log("adminYN : " + adminYN);
+				console.log("userCheck : " + userCheck);
+				console.log("managerCheck : " + managerCheck);
 				console.log("rnum : " + rnum);
 				
 				// userInfo 변수에 데이터 담기
@@ -122,8 +122,8 @@ function adminUserInfo(currentPage) {
 										td + userAddrDetail + td_ +
 										td + userGender + td_ +
 										td + userBirth + td_ +
-										td + useYN + td_ +
-										td + adminYN + td_ +
+										td + userCheck + td_ +
+										td + managerCheck + td_ +
 										td + btnPList + td_ +
 										td + btnUserDelete + td_ +
 										tr_;
@@ -264,7 +264,7 @@ function userDelete() {
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">sikppang2<br>관리자 페이지</div>
+                <div class="sidebar-brand-text mx-3">LEGO<br>관리자 페이지</div>
             </a><br>
 
             <!-- Divider -->
@@ -470,7 +470,7 @@ function userDelete() {
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span>
                                 <img class="img-profile rounded-circle"
-                                    src="/resources/img/admin.png">
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/1200px-LEGO_logo.svg.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

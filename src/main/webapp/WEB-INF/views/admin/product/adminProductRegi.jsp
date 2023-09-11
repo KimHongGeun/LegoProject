@@ -38,15 +38,50 @@ function count(type)  {
   productQuantity.value = number;
 }
 
+function productRepImg() {
+	console.log("gdgd");
+	let img = document.getElementById('productRepImgInput').files;
+	console.log("img : " + img);
+	console.log("img[0] : " + img[0]);
+	console.log("img[1] : " + img[1]);
+	let productRepImg = img[0];
+	
+	let result = new FormData();
+	if(productRepImg) {
+		console.log(productRepImg.name);
+		result.append("productRepImg", productRepImg);
+		console.log("test1");
+	} else {
+		alert('상품 대표이미지를 선택해주세요.');
+		return false;
+	}
+	console.log("test2");
+	
+  $.ajax({
+    url: "/productRepImg",
+    type: "POST",
+    data: result,
+    contentType: false,
+    processData: false,
+    success: function (data) {
+      console.log("이미지 업로드 성공: " + data);
+      alert('대표이미지 등록되었습니다'); 
+    },
+    error: function (request, status, error) {
+      alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+      console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    }
+  });
+	
+}
+
 function productRegi() {
   // CKEditor에서 입력한 내용을 가져옵니다.
   console.log("등록 버튼 눌렀습니다");
-  
   let choice = document.getElementById('productClassification');
   let name = document.getElementById('productName');
   let price = document.getElementById('productPrice');
   let quantity = document.getElementById('productQuantity');
-  let img = document.getElementById('productRepImg');
   console.log("choice : " + choice);
   
   let productClassification = choice.value;
@@ -54,13 +89,11 @@ function productRegi() {
   let productName = name.value;
   let productPrice = price.value;
   let productQuantity = quantity.value;
-  let productRepImg = img.value;
   console.log("productClassification : " + productClassification);
   console.log("productContent : " + productContent);
   console.log("productName : " + productName);
   console.log("productPrice : " + productPrice);
   console.log("productQuantity : " + productQuantity);
-  console.log("productRepImg : " + productRepImg);
   
   if(productChoice === '') {
   	alert("상품 분류를 선택해주세요");
@@ -76,10 +109,6 @@ function productRegi() {
   }
   if(productQuantity == '0') {
   	alert("상품수량를 입력해주세요");
-  	return false;
-  }
-  if(productRepImg === undefined) {
-  	alert("대표 이미지를 선택해주세요");
   	return false;
   }
   if(productContent == '') {
@@ -102,7 +131,7 @@ function productRegi() {
  	    console.log("파일 경로 " + (i + 1) + ": " + filePath);
  	    console.log("파일 이름 " + (i + 1) + ": " + fileName);
  	    filePaths.push(filePath);
- 	    fileNames.push(fileName);
+ 	    fileNames.push(fileName);	
   	}
   }
   console.log(" 분류 : " + productClassification);
@@ -112,7 +141,6 @@ function productRegi() {
   console.log(" 내용 : " + productContent);
   console.log(" 경로 : " + filePaths);
   console.log(" 이름 : " + fileNames);
-  console.log(" 대표이미지 : " + productRepImg);
   
   // FormData 객체 생성
   let formData = new FormData();
@@ -121,7 +149,7 @@ function productRegi() {
   formData.append("productPrice", productPrice);
   formData.append("productQuantity", productQuantity);
   formData.append("productContent", productContent);
-  formData.append("productRepImg", productRepImg);
+  // formData.append("productRepImg", productRepImg);
   formData.append("filePath", filePaths);
   formData.append("fileName", fileNames);
  	
@@ -133,9 +161,16 @@ function productRegi() {
     processData: false,
     success: function (data) {
       console.log("이미지 업로드 성공: " + data);
-      alert('등록되었습니다'); 
-      window.close();
-      window.opener.location.reload();
+      
+      if (data != '') {
+        alert('등록되었습니다'); 
+        window.close();
+        window.opener.location.reload();
+      } else {
+      	alert('이미 사용 중인 아이디입니다.');
+      	return false;
+      }
+
     },
     error: function (request, status, error) {
       alert("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -154,10 +189,10 @@ function productRegi() {
   	<div>상품분류</div>
   	<select id="productClassification">
   		<option value=""></option>
-  		<option value="bread">bread</option>
-		  <option value="dessert">dessert</option>
-		  <option value="jam">jam</option>
-		  <option value="snack">snack</option>
+  		<option value="CAR">CAR</option>
+		  <option value="STARWARS">STARWARS</option>
+		  <option value="MARVEL">MARVEL</option>
+		  <option value="HARRYPOTTER">HARRYPOTTER</option>
 		</select>
   </div><br>
   
@@ -180,7 +215,7 @@ function productRegi() {
   
   <div id="productRepImg">
    	<div>상품 대표이미지</div>
-   	<input id="productRepImg" type="file" name="file">
+   	<input id="productRepImgInput" type="file" name="file" onchange="productRepImg();">
   </div><br>
 	
 	<div>상품내용</div>

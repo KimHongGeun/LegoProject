@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE configuration
-  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
 		<!-- join -->
 		<typeAlias type="com.lego.project.user.join.vo.UserMemberVo" alias="userMemberVo" />
-			<!-- login -->	
+	<!-- login -->	
 		<typeAlias type="com.lego.project.user.login.vo.UserLoginVo" alias="userLoginVo" />		
 	<!-- findId -->	
 		<typeAlias type="com.lego.project.user.login.vo.UserLoginVo" alias="userFindIdVo" />
@@ -17,16 +15,18 @@
 	<!-- withdrawal -->
 		<typeAlias type="com.lego.project.user.myPage.vo.UserWithdrawalVo" alias="userWithdrawalVo" />
 	<!-- adminLogin -->
-		<typeAlias type="com.lego.project.user.admin.adminLogin.vo.AdminLoginVo" alias="adminLoginVo" />
+		<typeAlias type="com.lego.project.admin.adminLogin.vo.AdminLoginVo" alias="adminLoginVo" />
 	<!-- adminUser -->
-		<typeAlias type="com.lego.project.user.admin.adminUser.vo.AdminUserVo" alias="adminUserVo" />
+		<typeAlias type="com.lego.project.admin.adminUser.vo.AdminUserVo" alias="adminUserVo" />
 	<!-- adminPage -->
-		<typeAlias type="com.lego.project.user.admin.adminUser.vo.AdminPageVo" alias="adminPageVo" />
+		<typeAlias type="com.lego.project.admin.adminUser.vo.AdminPageVo" alias="adminPageVo" />
 	<!-- adminProduct -->
-		<typeAlias type="com.lego.project.user.admin.adminProduct.vo.AdminProductVo" alias="adminProductVo" />
+		<typeAlias type="com.lego.project.admin.adminProduct.vo.AdminProductVo" alias="adminProductVo" />
+	<!-- adminProductList -->
+		<typeAlias type="com.lego.project.admin.adminProduct.vo.AdminProductListVo" alias="adminProductListVo" />
 	<!-- adminFile -->
-		<typeAlias type="com.lego.project.user.admin.adminProduct.vo.AdminFileVo" alias="adminFileVo" />
+		<typeAlias type="com.lego.project.admin.adminProduct.vo.AdminFileVo" alias="adminFileVo" />
 	<!-- userProduct --> 
-	<typeAlias type="com.lego.project.user.prooduct.vo.UserProductVo" alias="userProductVo" />
+		<typeAlias type="com.lego.project.user.prooduct.vo.UserProductVo" alias="userProductVo" />
 	</typeAliases>
 </configuration>

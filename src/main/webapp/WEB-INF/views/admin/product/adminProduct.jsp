@@ -236,7 +236,7 @@ function productDel() {
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">sikppang2<br>관리자 페이지</div>
+                <div class="sidebar-brand-text mx-3">LEGO<br>관리자 페이지</div>
             </a><br>
 
             <!-- Divider -->
@@ -439,7 +439,7 @@ function productDel() {
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">관리자</span>
                                 <img class="img-profile rounded-circle"
-                                    src="/resources/img/admin.png">
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/LEGO_logo.svg/1200px-LEGO_logo.svg.png">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

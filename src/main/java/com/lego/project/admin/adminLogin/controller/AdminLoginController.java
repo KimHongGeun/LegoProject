@@ -22,7 +22,7 @@ public class AdminLoginController {
 	private final AdminLoginService adminLoginService;
 	
 	//로그인
-	@GetMapping("/adminLoginInfo")
+	@GetMapping("/adminLogin")
 	public String adminLogin() {
 		System.out.println("관리자 로그인 들어옴");
 		return "admin/login/adminLogin";
