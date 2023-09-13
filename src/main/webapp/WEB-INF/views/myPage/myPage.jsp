@@ -7,12 +7,12 @@
 		<h2>마 이 페 이 지</h2>
 		<div class="user">
 			<a href="update" class="update">
-				<img class="img" src="/resources/img/mypage1.png">
+				<img class="img" src="/resources/img/update_350x320.png">
 				<p class="text">정보수정</p>
 			</a>
 			
 			<a href="withdrawal" class="withdrawal">
-				<img class="img" src="/resources/img/mypage2.png">
+				<img class="img" src="/resources/img/withdrawal_350x320.png">
 				<p class="text">회원탈퇴</p>
 			</a>
 		</div>

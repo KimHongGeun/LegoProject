@@ -14,4 +14,5 @@ public class UserLoginVo {
 	private String userGender;
 	private String userBirth;
 	private String userCheck;
+	private String managerCheck;
 }

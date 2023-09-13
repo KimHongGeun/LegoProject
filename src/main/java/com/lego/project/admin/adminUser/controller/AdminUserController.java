@@ -30,7 +30,7 @@ public class AdminUserController {
 	private AdminUserDao adminUserDao;
 	private ObjectMapper objectMapper = new ObjectMapper();
 	
-	//회원관리 페이지 
+	//유저관리 페이지 
 	@GetMapping("/adminUser")
 	public String adminUser(HttpSession session) {
 		System.out.println("회원관리 페이지 들어옴");
@@ -43,8 +43,7 @@ public class AdminUserController {
 			return "redirect:/adminLogin";
 		}
 	}
-	// 회원조회 페이지 
-	
+	// 유저 페이지 조회처리 
 	@GetMapping(value = "/adminUserInfo", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public List<Object> adminUserInfo(@ModelAttribute AdminUserVo adminUserVo, AdminPageVo adminPageVo,
@@ -52,21 +51,26 @@ public class AdminUserController {
 			@RequestParam(value = "currentPage", required = false, defaultValue = "1") String currentPage){
 		String userId = (String) session.getAttribute("userId");
 		if (userId != null && userId.equals("manager")) {
-			//회원 총 인원
+			//유저 총 인원
 			int userCount = adminUserService.adminUserCount();
 			System.out.println("------------ userCount : " + userCount);
-			// 화면에 보여지는 회원 수
+			
+			// 화면에 보여지는 유저 수
 			int userSize = 10;
-			// 화면에 보여지는 페이지 개수
+			
+			// 화면에 보여지는 페이지 수
 			int pageSize = 5;
-			// 페이지 총 개수
+			
+			// 페이지 총수
 			int pageCount = (userCount / userSize) + (userCount % userSize == 0 ? 0 : 1);
+			
 			// 현재 페이지 구하기
 			String curPageStr = currentPage;
 			if (curPageStr == null) {
 				curPageStr = "1";
 			}
 			int curPage = Integer.parseInt(curPageStr);
+			
 			// 시작 페이지 구하기
 			int startPage = 1;
 			if (curPage % pageSize == 0) {
@@ -74,10 +78,13 @@ public class AdminUserController {
 			} else {
 				startPage = (curPage / pageSize) * pageSize + 1;
 			}
+			
 			// 끝 페이지 구하기
 			int endPage = startPage + pageSize - 1;
+			
 			// 시작 인덱스 구하기
 			int startIndex = (curPage - 1) * userSize + 1;
+			
 			// 마지막 인덱스 구하기
 			int endIndex = curPage * userSize;
 			// 시작 인덱스 제한
@@ -137,7 +144,7 @@ public class AdminUserController {
 		}
 	}
 
-	// 회원 삭제 버튼
+	// 유저 삭제 버튼
 	@GetMapping(value = "/userDelete", produces = "application/json;charset=utf-8")
 	@ResponseBody
 	public int userDelete(HttpSession session, @RequestParam("selUserId") String selUserId) {

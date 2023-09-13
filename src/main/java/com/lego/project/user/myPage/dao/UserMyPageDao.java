@@ -28,6 +28,12 @@ public class UserMyPageDao {
 		System.out.println("------updateDao 중간점검 -------");
 		return sql.update("UserJoinDao.updateInfo", userUpdateVo);
 	}
+	// 수정된 회원정보 조회
+		public UserUpdateVo updateComplete(String userId) {
+			System.out.println("dao 에서 updateComplete");
+			System.out.println("user id : " + userId);
+			return sql.selectOne("UserJoinDao.updateComplete", userId);
+		}
 	
 	public int withdrawalInfo(UserWithdrawalVo userWithdrawalVo) {
 		System.out.println("회원탈퇴의 dao에 들어옴");

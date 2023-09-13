@@ -31,11 +31,11 @@ public class UserLoginDao {
 	// 아이디 찾기 정보 전달
 	public String findIdConfirm(UserFindIdVo userFindIdVo){
 		System.out.println("아이디 찾기 dao의 userFindIdVo = " + userFindIdVo);
-		return sql.selectOne("UserJoinDao.login", userFindIdVo);
+		return sql.selectOne("UserJoinDao.findIdConfirm", userFindIdVo);
 	}
 	// 비밀번 찾기 정보 전달
 	public String findPwConfirm(UserFindPwVo userFindPwVo){
 		System.out.println("비밀번 찾기 dao의 userFindPwVo = " + userFindPwVo);
-		return sql.selectOne("UserJoinDao.login", userFindPwVo);
+		return sql.selectOne("UserJoinDao.findPwConfirm", userFindPwVo);
 	} 
 }

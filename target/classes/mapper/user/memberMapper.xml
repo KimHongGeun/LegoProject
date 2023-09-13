@@ -14,7 +14,7 @@
 	</select>
 <!-- 로그인 -->
 	<select id="login" parameterType="userLoginVo" resultType="userLoginVo">
-	SELECT userId FROM member WHERE userPw = #{userPw} AND userName = #{userName}
+	SELECT * FROM member WHERE userId = #{userId} AND userPw = #{userPw}
 	</select>
 <!-- 아이디 찾기 -->
 	<select id="findIdConfirm" parameterType="String" resultType="java.lang.String">
@@ -42,4 +42,8 @@
 		AND userPw = #{userPw} AND userName =#{userName}
 	</update>
 	
+<!-- 상품 조회 -->
+	<select id="userProduct" resultType="userProductVo">
+		SELECT * FROM adminProduct WHERE productClassification = #{bread}
+	</select>
 </mapper>

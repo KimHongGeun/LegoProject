@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.lego.project.user.login.dao.UserLoginDao;
 import com.lego.project.user.login.service.UserLoginService;
 import com.lego.project.user.login.vo.UserFindIdVo;
+import com.lego.project.user.login.vo.UserFindPwVo;
 import com.lego.project.user.login.vo.UserLoginVo;
 
 import lombok.RequiredArgsConstructor;
@@ -93,18 +94,46 @@ public class UserLoginController {
 		map.put("findId", userId);
 		System.out.println("map : "+ map);
 		return map;
+		
 	}
-	
-	//비밀번호 찾기 페이지에서 비밀번호 확인하기
+	// 아이디 찾기 페이지에 아이디 보여주기
+		@GetMapping("/findIdConfirm")
+		public ModelAndView findIdConfirm(HttpServletRequest request) {
+			ModelAndView mav = new ModelAndView("login/findIdConfirm.user");
+
+			System.out.println("아이디 결과 : " + request.getParameter("findId"));
+			String findId = request.getParameter("findId");
+			mav.addObject("findId", findId);
+			return mav;
+		}
+	// 비밀번호 찾기 페이지
+	@GetMapping("/findPw")
+	public String findPw() {
+		return "login/findPw.user";
+	}
+
+	// 비밀번호 찾기에 필요한 아이디, 이름, 생년월일 정보 전달
+	@PostMapping("/findPwConfirm")
+	@ResponseBody
+	public HashMap<String, String> findPwConfirm(@ModelAttribute UserFindPwVo userFindPwVo, HttpServletRequest request) {
+		HashMap<String, String> map = new HashMap<String, String>();
+
+		String userPw = userLoginDao.findPwConfirm(userFindPwVo);
+		System.out.println("userPw : " + userPw);
+		map.put("findPw", userPw);
+
+		return map;
+	}
+
+	// 비밀번호 찾기 페이지에서 비밀번호 보여주기
 	@GetMapping("/findPwConfirm")
 	public ModelAndView findPwConfirm(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("login/findPwConfirm.user");
-		
+
 		System.out.println("아이디 결과 : " + request.getParameter("findPw"));
 		String findPw = request.getParameter("findPw");
-		mav.addObject("findPw",findPw);
+		mav.addObject("findPw", findPw);
 		return mav;
-		
 	}
-	
+
 }

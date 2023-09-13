@@ -47,7 +47,7 @@ public class UserMyPageController {
 		System.out.println("userAddrDetail : " + userAddrDetail);
 		System.out.println("----update페이지로 이동한다----");
 		
-		return "myPage/update.uesr";
+		return "myPage/update.user";
 	}
 	
 	// 정보수정 정보 전달
